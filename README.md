@@ -4,13 +4,26 @@
 
 Given a panospheric image with features detected, we want to ignore outliers and detect clusters which indicate areas likely containing objects. We will receive and utilize a θ value for each feature while completely ignoring the r value.
 
+------
+
 ![panospheric_sample](https://i.imgur.com/LBTv6nR.jpg)
 
-**Inputs:** Feature locations, K, Initial Mean Values
-
-**Process:** Detect groups of features as clusters
+**Inputs:** Feature locations, K, generating random initial mean values.
+**Process:** Detect groups of features as clusters, find their mean value.
+**Output: **The approximate center location of each cluster. Should be accurate to within 20 degrees.
 
 **Output: **The approximate center location of each cluster. Should be accurate to within 20 degrees.
+
+------
+
+**How to use this module:**
+
+1- Clone this repository onto your local machine.
+2- Open the Visual Studio solution file: 'detect_feature_clusters.sln'
+3- Determine which dataset to use as input and what filename you'd like for the file being output.
+... these can both be specified in the header.
+4- Specify a threshold in the header of main.cpp. based on visual analysis of the plots provided.
+5- Run the script, preferably configured as x64, and the file containing the average values of the clusters will automatically output into the root directory.
 
 ------
 
@@ -32,13 +45,13 @@ Given a panospheric image with features detected, we want to ignore outliers and
 
   
 
-**Approach:** First solution that comes to mind is utilizing k-means clustering.
+**Approach using simplifying assumptions:** 
 
-K-means clustering allows us to locate groups of similar points within a dataset.
+First solution that comes to mind is utilizing k-means clustering. K-means clustering allows us to locate groups of similar points within a dataset.
 
 However, a faster and much less robust brute force method can also be applied. We will try using a maximum-difference threshold that will be tested for while parsing across the polar coordinate values in order to separate clusters. If two adjacent points are located within our indicated tolerance level (20-25 degrees), we can conclude that they belong to the same cluster.
 
-
+------
 
 **Analyzing this module's results:**
 
@@ -49,6 +62,8 @@ However, a faster and much less robust brute force method can also be applied. W
 | input2.txt | 61.5,189.1,286.5,359.5 | 2.95,60.8133,185.931,282.764,355.775 | There should be a cluster @ ~3 degrees. The answer provided must have missed that cluster. <br />**Correct** |
 | input3.txt |                        | 6.35556,94.9846,165.473,324.875      | Appears to be **correct**                                    |
 | input4.txt |                        | 109.627,188.971,251.869,322.462      | Appears to be **correct**                                    |
+
+------
 
 **Discussing Solution:**
 
