@@ -1,3 +1,16 @@
+/*
+**   Detecting feature clusters for a given dataset 
+** 
+** A non-robust brute force method to determine average
+** or middle value of each cluster contained in a 2D dataset. 
+** This module is dependent on the visual assumptions made 
+** from plotting the input datasets. 
+**
+** For a more robust solution, look to K-means.
+**
+** Farnam Adelkhani - June 2020
+*/
+
 #include <iostream>
 #include <vector>
 #include <cstdlib>
@@ -9,11 +22,19 @@
 //I don't like using namespace std, but convenient in this module.
 using namespace std;
 
+string filename = "input0.txt";                          //Assign input file
+string output_filename = "Solution_output0_farnam.txt";  //Choose output filename
+
+//User defined threshold:
+//Decided on this value by visually analyzing all five input scatter plots
+//Values between 20-30 should work just as well.
+int Threshold = 25;                 
+
 void main()
 {
 	//Create a vector of vectors to read in strings
 	vector <vector <string>> data;
-	ifstream infile("input0.txt");
+	ifstream infile(filename);
 	vector<double> inputDataset;
 	while (infile)
 	{
@@ -43,8 +64,8 @@ void main()
 			[](string const& val) {return stod(val); });
 	}
 
-	vector<float> clustersAvg;
-	int Threshold = 25;                 //User defined threshold
+	vector<float> clustersAvg;          //Vector for storing cluster avg values
+
 	int K = 4;                          //Find K by inspection
 	int clusterCount = 0;               //Current cluster size
 	float clusterSum = 0.0f;            //Current cluster summation
@@ -81,7 +102,7 @@ void main()
 
 	//Writing average values to output .txt file
 	fstream f1;
-	f1.open("Solution_output0_farnam.txt", ios::out);
+	f1.open(output_filename, ios::out);
 	{
 		bool first = true;
 		for (const auto& avg : clustersAvg)
