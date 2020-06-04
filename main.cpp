@@ -13,7 +13,7 @@ void main()
 {
 	//Create a vector of vectors to read in strings
 	vector <vector <string>> data;
-	ifstream infile("input2.txt");
+	ifstream infile("input0.txt");
 	vector<double> inputDataset;
 	while (infile)
 	{
@@ -81,12 +81,15 @@ void main()
 
 	//Writing average values to output .txt file
 	fstream f1;
-	f1.open("output2_farnam.txt", ios::out);
+	f1.open("Solution_output0_farnam.txt", ios::out);
 	{
+		bool first = true;
 		for (const auto& avg : clustersAvg)
 		{
+			if (!first) f1 << ",";
+			first = false;
 			//Write comma seperated with no space
-			f1 << avg << ",";
+			f1 << avg;
 		}
 	}
 	f1.close();
